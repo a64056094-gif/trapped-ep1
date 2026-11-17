@@ -1,28 +1,20 @@
 name: Render TRAPPED Ep1
 on:
   workflow_dispatch:
-
 jobs:
   render:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      - name: Unzip project
-        run: unzip -o trapped_ep1_remotion_project.zip
-
-      - name: Install dependencies & render MP4
-        working-directory: trapped-ep1-remotion
+      - run: unzip -o trapped_ep1_remotion_project.zip
+      - working-directory: trapped-ep1-remotion
         run: |
           npm install
           npx remotion render TrappedEp1 out/trapped_ep1.mp4 --gl=swangle
-
-      - name: Upload MP4
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: trapped-ep1-video
           path: trapped-ep1-remotion/out/trapped_ep1.mp4
